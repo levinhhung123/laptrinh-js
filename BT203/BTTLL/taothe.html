@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thêm và Xoá Hàng Sản Phẩm</title>
+<style>
+    .product-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .product-row input {
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+    <div id="product-list">
+        <!-- Danh sách sản phẩm sẽ được thêm vào đây -->
+    </div>
+    <button onclick="addProduct()">Thêm Sản Phẩm</button>
+    <button onclick="removeProduct()">Xoá Sản Phẩm</button>
+
+    <script>
+        let productCount = 0;
+
+        function addProduct() {
+            productCount++;
+
+            const productList = document.getElementById('product-list');
+
+            const productRow = document.createElement('div');
+            productRow.className = 'product-row';
+
+            const productName = document.createElement('input');
+            productName.placeholder = 'Tên Sản Phẩm';
+            productName.setAttribute('type', 'text');
+
+            const productMSP = document.createElement('input');
+            productMSP.placeholder = 'Mã Sản Phẩm';
+            productMSP.setAttribute('type', 'text');
+
+            const productTen = document.createElement('input');
+            productTen.placeholder = 'Tên';
+            productTen.setAttribute('type', 'text');
+
+            const productSL = document.createElement('input');
+            productSL.placeholder = 'Số Lượng';
+            productSL.setAttribute('type', 'text');
+
+            productRow.appendChild(productName);
+            productRow.appendChild(productMSP);
+            productRow.appendChild(productTen);
+            productRow.appendChild(productSL);
+
+            productList.appendChild(productRow);
+        }
+
+        function removeProduct() {
+            const productList = document.getElementById('product-list');
+            if (productList.childNodes.length > 0) {
+                productList.removeChild(productList.lastChild);
+                productCount--;
+            }
+        }
+    </script>
+</body>
+</html>
