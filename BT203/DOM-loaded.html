@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title id="title">DOM Example</title>
+  <script>
+    function domLoaded() {
+      console.log('Dom is loaded');
+      
+      var div1 = document.getElementById('container1');
+      div1.innerHTML += '<p>Paragraph 3 the URL is ' + document.URL + '</p>';
+      
+      var title = document.getElementById('title');
+      title.innerText += 'Cool!';
+      
+      var divs = document.getElementsByTagName('div');
+      for (var i = 0; i < divs.length; i++) {
+        divs[i].innerHTML += '<p>Another Paragraph</p>';
+      }
+    }
+  </script>
+</head>
+<body onload="domLoaded();">
+  <div id="container1">
+    <h1>Heading 1</h1>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+  </div>
+  <div id="container2">
+    <h1>Heading 2</h1>
+    <p>Paragraph 1</p>
+  </div>
+</body>
+</html>
