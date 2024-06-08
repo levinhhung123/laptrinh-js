@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Quản Trị</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        h1 {
+            text-align: center;
+            color: brown;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+            margin: 0 auto !important; /* Canh giữa theo chiều ngang */
+            display: block; /* Loại bỏ khoảng trắng dưới canvas */
+        }
+        table {
+            margin-bottom: 20px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .edit, .delete {
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        .edit {
+            background-color: green;
+        }
+        .delete {
+            background-color: red;
+        }
+        .edit:hover, .delete:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>DỮ LIỆU NGƯỜI DÙNG</h1>
+    <table border="1" id="data-table" style="background: navajowhite;">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Tuổi</th>
+                <th>Nghề Nghiệp</th>
+                <th>Đánh Giá</th>
+                <th>Yêu Thích</th>
+                <th>Tần Suất</th>
+                <th>Thiết Bị</th>
+                <th>Nền Tảng</th>
+                <th>Giới Thiệu</th>
+                <th>Hài Lòng</th>
+                <th>Cải Thiện</th>
+                <th>Thể Loại Yêu Thích</th>
+                <th>Giờ Xem</th>
+                <th>Thể Loại Trò Chơi</th>
+                <th>Sự Kiện Trực Tiếp</th>
+                <th>Nguồn Nội Dung</th>
+                <th>Ghi Chú</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach(function(item) { %>
+                <tr>
+                    <td><%= item.name %></td>
+                    <td><%= item.email %></td>
+                    <td><%= item.age %></td>
+                    <td><%= item.occupation %></td>
+                    <td><%= item.rating %></td>
+                    <td><%= item.favorite %></td>
+                    <td><%= item.frequency %></td>
+                    <td><%= item.device %></td>
+                    <td><%= item.platform %></td>
+                    <td><%= item.recommend %></td>
+                    <td><%= item.satisfaction %></td>
+                    <td><%= item.improvement %></td>
+                    <td><%= item.favoriteGenre %></td>
+                    <td><%= item.streamingHours %></td>
+                    <td><%= item.gameGenre %></td>
+                    <td><%= item.liveEvents %></td>
+                    <td><%= item.contentSource %></td>
+                    <td><%= item.remark %></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="edit" onclick="editItem('<%= item.id %>')">Sửa</button>
+                            <button class="delete" onclick="deleteItem('<%= item.id %>')">Xoá</button>
+                        </div>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <div class="chart-container">
+        <canvas id="thietBiChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="ngheNghiepChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="yeuThichChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="danhGiaChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="tanSuatChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="nenTangChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="haiLongChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="gioiThieuChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="tuoiChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="theLoaiYeuThichChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="gioXemChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="theLoaiTroChoiChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="suKienTrucTiepChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="nguonNoiDungChart"></canvas>
+    </div>
+
+    <script>
+        function tableToJson(table) {
+            const headers = [];
+            for (let i = 0; i < table.rows[0].cells.length; i++) {
+                headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi, '');
+            }
+            const data = [];
+            for (let i = 1; i < table.rows.length; i++) {
+                const tableRow = table.rows[i];
+                const rowData = {};
+                for (let j = 0; j < tableRow.cells.length; j++) {
+                    rowData[headers[j]] = tableRow.cells[j].innerHTML;
+                }
+                data.push(rowData);
+            }
+            return data;
+        }
+
+        function editItem(id) {
+            // Redirect to the edit page with the item id
+            window.location.href = `/edit/${id}`;
+        }
+
+        function deleteItem(id) {
+            if (confirm('Bạn có chắc chắn muốn xoá mục này không?')) {
+                fetch(`/delete/${id}`, {
+                    method: 'DELETE'
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Xoá không thành công.');
+                    }
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const table = document.getElementById("data-table");
+            const data = tableToJson(table);
+
+            // Hàm để đếm số lượng xuất hiện của các giá trị trong một mảng
+            function countOccurrences(array) {
+                return array.reduce((acc, val) => {
+                    acc[val] = (acc[val] || 0) + 1;
+                    return acc;
+                }, {});
+            }
+
+            // Hàm tạo biểu đồ
+            function createChart(ctx, labels, data, label, backgroundColor, borderColor) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: label,
+                            data: data,
+                            backgroundColor: backgroundColor,
+                            borderColor: borderColor,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Dữ liệu cho biểu đồ thiết bị
+            const thietBi = data.map(item => item.thiếtbị);
+            const thietBiCount = countOccurrences(thietBi);
+            createChart(
+                document.getElementById('thietBiChart').getContext('2d'),
+                Object.keys(thietBiCount),
+                Object.values(thietBiCount),
+                'Sử Dụng Thiết Bị',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(75, 192, 192, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ nghề nghiệp
+            const ngheNghiep = data.map(item => item.nghềnghiệp);
+            const ngheNghiepCount = countOccurrences(ngheNghiep);
+            createChart(
+                document.getElementById('ngheNghiepChart').getContext('2d'),
+                Object.keys(ngheNghiepCount),
+                Object.values(ngheNghiepCount),
+                'Nghề Nghiệp',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ yêu thích
+            const yeuThich = data.map(item => item.yêuthích);
+            const yeuThichCount = countOccurrences(yeuThich);
+            createChart(
+                document.getElementById('yeuThichChart').getContext('2d'),
+                Object.keys(yeuThichCount),
+                Object.values(yeuThichCount),
+                'Yêu Thích',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 159, 64, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ đánh giá
+            const danhGia = data.map(item => item.đánhgiá);
+            const danhGiaCount = countOccurrences(danhGia);
+            createChart(
+                document.getElementById('danhGiaChart').getContext('2d'),
+                Object.keys(danhGiaCount),
+                Object.values(danhGiaCount),
+                'Đánh Giá',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ tần suất
+            const tanSuat = data.map(item => item.tầnsuất);
+            const tanSuatCount = countOccurrences(tanSuat);
+            createChart(
+                document.getElementById('tanSuatChart').getContext('2d'),
+                Object.keys(tanSuatCount),
+                Object.values(tanSuatCount),
+                'Tần Suất',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ nền tảng
+            const nenTang = data.map(item => item.nềntảng);
+            const nenTangCount = countOccurrences(nenTang);
+            createChart(
+                document.getElementById('nenTangChart').getContext('2d'),
+                Object.keys(nenTangCount),
+                Object.values(nenTangCount),
+                'Nền Tảng',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(255, 206, 86, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ hài lòng
+            const haiLong = data.map(item => item.hàilòng);
+            const haiLongCount = countOccurrences(haiLong);
+            createChart(
+                document.getElementById('haiLongChart').getContext('2d'),
+                Object.keys(haiLongCount),
+                Object.values(haiLongCount),
+                'Hài Lòng',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(75, 192, 192, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ giới thiệu
+            const gioiThieu = data.map(item => item.giớithiệu);
+            const gioiThieuCount = countOccurrences(gioiThieu);
+            createChart(
+                document.getElementById('gioiThieuChart').getContext('2d'),
+                Object.keys(gioiThieuCount),
+                Object.values(gioiThieuCount),
+                'Giới Thiệu',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ Tuổi
+            const tuoi = data.map(item => item.tuổi);
+            const tuoiCount = countOccurrences(tuoi);
+            const tuoiLabels = Object.keys(tuoiCount);
+            const tuoiData = Object.values(tuoiCount);
+            const barColors = generateRandomColors(tuoiLabels.length);
+
+            const tuoiChartCanvas = document.getElementById('tuoiChart').getContext('2d');
+            new Chart(tuoiChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: tuoiLabels,
+                    datasets: [{
+                        label: 'Tuổi',
+                        data: tuoiData,
+                        backgroundColor: barColors,
+                        borderColor: barColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Hàm tạo mảng màu sắc ngẫu nhiên
+            function generateRandomColors(numColors) {
+                const colors = [];
+                for (let i = 0; i < numColors; i++) {
+                    const color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`;
+                    colors.push(color);
+                }
+                return colors;
+            }
+
+            // Dữ liệu cho biểu đồ Thể Loại Yêu Thích
+            const theLoaiYeuThich = data.map(item => item.thểloạiyêuthích);
+            const theLoaiYeuThichCount = countOccurrences(theLoaiYeuThich);
+            createChart(
+                document.getElementById('theLoaiYeuThichChart').getContext('2d'),
+                Object.keys(theLoaiYeuThichCount),
+                Object.values(theLoaiYeuThichCount),
+                'Thể Loại Yêu Thích',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(255, 206, 86, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ Giờ Xem
+            const gioXem = data.map(item => item.giờxem);
+            const gioXemCount = countOccurrences(gioXem);
+            createChart(
+                document.getElementById('gioXemChart').getContext('2d'),
+                Object.keys(gioXemCount),
+                Object.values(gioXemCount),
+                'Giờ Xem',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ Thể Loại Trò Chơi
+            const theLoaiTroChoi = data.map(item => item.thểloạitròchơi);
+            const theLoaiTroChoiCount = countOccurrences(theLoaiTroChoi);
+            createChart(
+                document.getElementById('theLoaiTroChoiChart').getContext('2d'),
+                Object.keys(theLoaiTroChoiCount),
+                Object.values(theLoaiTroChoiCount),
+                'Thể Loại Trò Chơi',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(75, 192, 192, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ Sự Kiện Trực Tiếp
+            const suKienTrucTiep = data.map(item => item.sựkiệntrựctiếp);
+            const suKienTrucTiepCount = countOccurrences(suKienTrucTiep);
+            createChart(
+                document.getElementById('suKienTrucTiepChart').getContext('2d'),
+                Object.keys(suKienTrucTiepCount),
+                Object.values(suKienTrucTiepCount),
+                'Sự Kiện Trực Tiếp',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 1)'
+            );
+
+            // Dữ liệu cho biểu đồ Nguồn Nội Dung
+            const nguonNoiDung = data.map(item => item.nguồnnộidung);
+            const nguonNoiDungCount = countOccurrences(nguonNoiDung);
+            createChart(
+                document.getElementById('nguonNoiDungChart').getContext('2d'),
+                Object.keys(nguonNoiDungCount),
+                Object.values(nguonNoiDungCount),
+                'Nguồn Nội Dung',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 159, 64, 1)'
+            );
+        });
+    </script>
+</body>
+</html>

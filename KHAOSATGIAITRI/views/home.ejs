@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1 id="title">PHIẾU KHẢO SÁT</h1>
+            <p id="description">Khảo sát xếp hạng nội dung giải trí yêu thích</p>
+        </header>
+        <form id="survey-form" action="/submit-survey" method="post">
+                <div class="form-group">
+                    <label for="name" id="name-label">Tên</label>
+                    <input type="text" name="name" id="name" placeholder="Nhập tên của bạn" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" id="email-label">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Nhập email của bạn" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age" id="number-label">Tuổi</label>
+                    <input type="number" name="age" id="number" min="1" max="99" placeholder="Nhập tuổi của bạn">
+                </div>
+
+                <div class="form-group">
+                    <label for="occupation">Chọn vai trò mô tả bạn tốt nhất</label>
+                    <select name="occupation" id="dropdown">
+                        <option selected disabled value>Chọn vai trò của bạn</option>
+                        <option value="student">Học sinh/Sinh viên</option>
+                        <option value="full-time-job">Làm việc toàn thời gian</option>
+                        <option value="part-time-job">Làm việc bán thời gian</option>
+                        <option value="prefer-to-not-say">Không muốn tiết lộ</option>
+                        <option value="other">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="rating">Bạn đánh giá nội dung giải trí của chúng tôi như thế nào?</label>
+                    <div class="radio-group">
+                        <input type="radio" name="rating" id="poor" value="poor"><label for="poor"> Kém </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="rating" id="average" value="average"><label for="average"> Trung bình </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="rating" id="good" value="good"><label for="good"> Tốt </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="rating" id="excellent" value="excellent"><label for="excellent"> Xuất sắc </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="favorite">Chọn loại nội dung giải trí yêu thích của bạn</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="movies" value="movies"><label for="movies"> Phim ảnh </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="tv-shows" value="tv-shows"><label for="tv-shows"> Chương trình TV </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="music" value="music"><label for="music"> Âm nhạc </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="books" value="books"><label for="books"> Sách </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="games" value="games"><label for="games"> Trò chơi </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="sports" value="sports"><label for="sports"> Thể thao </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="podcasts" value="podcasts"><label for="podcasts"> Podcast </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="comics" value="comics"><label for="comics"> Truyện tranh </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="theatre" value="theatre"><label for="theatre"> Kịch </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="favorite" id="concerts" value="concerts"><label for="concerts"> Hòa nhạc </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="frequency">Bạn tiêu tốn bao nhiêu thời gian cho nội dung giải trí mỗi ngày?</label>
+                    <select name="frequency" id="frequency" required>
+                        <option selected disabled value>Chọn thời gian</option>
+                        <option value="less_than_1_hour">Dưới 1 giờ</option>
+                        <option value="1_to_2_hours">1 đến 2 giờ</option>
+                        <option value="2_to_4_hours">2 đến 4 giờ</option>
+                        <option value="more_than_4_hours">Hơn 4 giờ</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="device">Bạn thường sử dụng thiết bị nào để truy cập nội dung giải trí?</label>
+                    <select name="device" id="device" required>
+                        <option selected disabled value>Chọn thiết bị</option>
+                        <option value="smartphone">Điện thoại thông minh</option>
+                        <option value="tablet">Máy tính bảng</option>
+                        <option value="laptop">Laptop</option>
+                        <option value="desktop">Máy tính để bàn</option>
+                        <option value="smart_tv">TV thông minh</option>
+                        <option value="other">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="platform">Bạn sử dụng nền tảng nào để truy cập nội dung giải trí?</label>
+                    <select name="platform" id="platform" required>
+                        <option selected disabled value>Chọn nền tảng</option>
+                        <option value="netflix">Netflix</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="spotify">Spotify</option>
+                        <option value="apple_music">Apple Music</option>
+                        <option value="amazon_prime">Amazon Prime</option>
+                        <option value="disney_plus">Disney+</option>
+                        <option value="other">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="recommend">Bạn có sẵn sàng giới thiệu nội dung giải trí của chúng tôi cho bạn bè không?</label>
+                    <div class="radio-group">
+                        <input type="radio" name="recommend" id="recommend-yes" value="yes"><label for="recommend-yes"> Có </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="recommend" id="recommend-no" value="no"><label for="recommend-no"> Không </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="satisfaction">Mức độ hài lòng của bạn với nội dung giải trí của chúng tôi?</label>
+                    <div class="radio-group">
+                        <input type="radio" name="satisfaction" id="very-dissatisfied" value="very_dissatisfied"><label for="very-dissatisfied"> Rất không hài lòng </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="satisfaction" id="dissatisfied" value="dissatisfied"><label for="dissatisfied"> Không hài lòng </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="satisfaction" id="neutral" value="neutral"><label for="neutral"> Trung lập </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="satisfaction" id="satisfied" value="satisfied"><label for="satisfied"> Hài lòng </label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" name="satisfaction" id="very-satisfied" value="very_satisfied"><label for="very-satisfied"> Rất hài lòng </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="improvement">Bạn có đề xuất gì để chúng tôi cải thiện nội dung giải trí không?</label>
+                    <textarea name="improvement" id="improvement" placeholder="Hãy cho chúng tôi biết..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="favoriteGenre">Thể loại phim bạn yêu thích nhất là gì?</label>
+                    <select name="favoriteGenre" id="favoriteGenre" required>
+                        <option selected disabled value>Chọn thể loại</option>
+                        <option value="action">Hành động</option>
+                        <option value="comedy">Hài</option>
+                        <option value="drama">Tâm lý</option>
+                        <option value="horror">Kinh dị</option>
+                        <option value="romance">Lãng mạn</option>
+                        <option value="sci-fi">Khoa học viễn tưởng</option>
+                        <option value="other">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="streamingHours">Bạn dành bao nhiêu giờ mỗi tuần để xem phim trực tuyến?</label>
+                    <select name="streamingHours" id="streamingHours" required>
+                        <option selected disabled value>Chọn giờ</option>
+                        <option value="less_than_1_hour">Dưới 1 giờ</option>
+                        <option value="1_to_3_hours">1 đến 3 giờ</option>
+                        <option value="3_to_5_hours">3 đến 5 giờ</option>
+                        <option value="more_than_5_hours">Hơn 5 giờ</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="gameGenre">Thể loại trò chơi điện tử bạn yêu thích nhất là gì?</label>
+                    <select name="gameGenre" id="gameGenre" required>
+                        <option selected disabled value>Chọn thể loại</option>
+                        <option value="action">Hành động</option>
+                        <option value="adventure">Phiêu lưu</option>
+                        <option value="puzzle">Giải đố</option>
+                        <option value="sports">Thể thao</option>
+                        <option value="strategy">Chiến thuật</option>
+                        <option value="other">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="liveEvents">Bạn có thường xuyên tham gia các sự kiện trực tiếp (hòa nhạc, kịch, thể thao, v.v.) không?</label>
+                    <select name="liveEvents" id="liveEvents" required>
+                        <option selected disabled value>Chọn câu trả lời</option>
+                        <option value="never">Chưa bao giờ</option>
+                        <option value="rarely">Hiếm khi</option>
+                        <option value="sometimes">Thỉnh thoảng</option>
+                        <option value="often">Thường xuyên</option>
+                        <option value="always">Luôn luôn</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contentSource">Bạn thường xuyên tìm kiếm nội dung giải trí từ nguồn nào nhất?</label>
+                    <select name="contentSource" id="contentSource" required>
+                        <option selected disabled value>Chọn nguồn</option>
+                        <option value="social-media">Mạng xã hội</option>
+                        <option value="friends">Bạn bè</option>
+                        <option value="ads">Quảng cáo</option>
+                        <option value="news-websites">Trang tin tức</option>
+                        <option value="other">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="remark">Ghi chú</label>
+                    <textarea name="remark" id="remark" placeholder="Hãy cho chúng tôi biết làm thế nào để cải thiện..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button id="submit" type="submit">Gửi</button>
+                </div>
+            </form>
+
+    </main>
+    <style>body {
+        margin: 40px 0 40px 0;
+        padding: 0;
+        border: none;
+        outline: none;
+        /* background-color: #eee; */
+        background-color: #e35267;
+        box-shadow: none;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    }
+    
+    main {
+        background-color: white;
+        padding: 10px 40px 40px 40px;
+        display: block;
+        text-align: left;
+        max-width: 500px;
+        margin: auto;
+        border-radius: 10px;
+    }
+    
+    header {
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 40px;
+        color: #191516;
+        font-weight: bold;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        font-size: 22px;
+    }
+    
+    #name, #email, #number, #dropdown {
+        outline: none;
+        width: 100%;
+        padding: 7px;
+        font-size: 16px;
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+        background-color: white;
+        box-sizing: border-box;
+    }
+    
+    #dropdown, option {
+        outline: none;
+    }
+    
+    select {
+        padding: 7px;
+    }
+    
+    textarea {
+        display: block;
+    }
+    
+    .form-group {
+        padding: 8px 0;
+        margin-bottom: 2px;
+    }
+    
+    .form-group>label {
+        margin-bottom: 8px;
+        color: #191516;
+        display: block;
+        font-weight: 500;
+    }
+    
+    [type="checkbox"]+label>span, [type="radio"]+label {
+        font-size: 16px;
+    }
+    
+    [type="checkbox"], [type="radio"] {
+        margin: 0 8px 0 0;
+        box-sizing: border-box;
+        min-width: 18px;
+        min-height: 18px;
+    }
+    
+    /*hide the original checkbox and radio button*/
+    
+    [type="checkbox"] , [type="radio"] {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    
+    .radio-group, .checkbox-group {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        position: relative;
+    }
+    
+    [type="radio"]+label {
+        margin: 0 5px 0 0;
+        font-size: 16px;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    [type="checkbox"]+label {
+        margin: 0 5px 0 0;
+        font-size: 16px;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    /* this is the custom box for the checkbox*/
+    
+    [type="checkbox"]+label::before {
+        content: '';
+        min-width: 18px;
+        min-height: 18px;
+        position: absolute;
+        left: -26px;
+        border-radius: 3px;
+        /* top: 5px; */
+        background-color: #eee;
+        transition: all 0.4s;
+    }
+    
+    /* custom checkmark made using only css*/
+    
+    /* 
+    [type="checkbox"]+label::after {
+        content: '';
+        min-width: 0px;
+        min-height: 0px;
+        position: absolute;
+        left: -20px;
+        top: 2px;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+        background-color:red; 
+        transform: rotateZ(40deg);
+        transition:  all 0.4s;
+    
+    }  
+    */
+    
+    /* this will unhide the custom checkmark */
+    
+    /* [type="checkbox"]:checked +label::after {
+        min-width: 5px;
+        min-height: 10px;
+    } */
+    
+    /* this is the svg for the checkmark */
+    
+    [type="checkbox"]+label svg {
+        position: absolute;
+        width: 28px;
+        left: -31px;
+        top: -5px;
+    }
+    
+    /* this is the polyline for the checkmark svg */
+    
+    [type="checkbox"]+label svg polyline {
+        stroke: white;
+        stroke-width: 8;
+        fill: none;
+        stroke-dasharray: 70;
+        stroke-dashoffset: 70;
+        transition: stroke-dashoffset 0.4s;
+    }
+    
+    /* change the color of custom checkbox when the original checkbox is in checked state */
+    
+    [type="checkbox"]:checked+label::before {
+        background-color: #191516;
+    }
+    
+    /* setting stroke-dashoffset to 0 will reveal the hidden checkmark */
+    
+    [type="checkbox"]:checked+label svg polyline {
+        stroke-dashoffset: 0;
+    }
+    
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+        height: 200px;
+        resize: none;
+        padding: 4px;
+        font-size: 16px;
+        border: 1px solid #dee2e6;
+    }
+    
+    button {
+        width: 100%;
+        display: block;
+        height: 40px;
+        background-color: #191516;
+        border: none;
+        font-weight: bold;
+        font-size: 20px;
+        color: white;
+        box-sizing: border-box;
+    }
+    
+    #description {
+        text-align: center;
+        font-style: italic;
+        margin-top: -10px;
+    }
+    
+    /* custom circle for radio button*/
+    [type="radio"]+label::before {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background-color: #eee;
+        left: -27px;
+        top: -1px;
+        width: 20px;
+        height: 20px;
+        transition: all 0.4s;
+    }
+    
+    /* fill circle with inset shadow when it is selected*/
+    [type="radio"]:checked+label::before {
+        box-shadow: inset 0 0 0 6px #191516;
+    }
+    
+    
+    @media (max-width: 540px) {
+     main {
+            max-width: 380px;
+        }
+    }
+    @media (max-width: 460px) {
+        main {
+            max-width: 280px;
+        }
+        h1 {
+            font-size: 32px;
+        }
+        #description {
+            font-size: 15px;
+        }
+        form {
+            font-size: 18px;
+        }
+        #name, #email, #number, #dropdown, textarea {
+            font-size: 15px;
+        }
+        [type="radio"]+label, [type="checkbox"]+label>span {
+            font-size: 15px;
+        }
+    }
+    
+    @media (max-width: 375px) {
+     main {
+            max-width: 260px;
+            padding: 10px 30px 30px 40px;
+        }
+        h1 {
+            font-size: 28px;
+        }
+        #description {
+            font-size: 12px;
+        }
+        form {
+            font-size: 15px;
+        }
+        #name, #email, #number, #dropdown, textarea {
+            font-size: 12px;
+        }
+        [type="radio"]+label, [type="checkbox"]+label>span {
+            font-size: 12px;
+        }
+        button {
+            font-size: 18px;
+        }
+    }
+    
+    @media (max-width: 320px) {
+     main {
+            max-width: 220px;
+        }
+    }
+    
+    @media (max-width: 280px) {
+     main {
+            max-width: 180px;
+        }
+    }
+    </style>
+</body>
+
+</html>
